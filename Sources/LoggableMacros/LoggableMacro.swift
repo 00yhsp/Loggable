@@ -23,7 +23,7 @@ public struct LoggableMacro: MemberMacro {
             ),
             DeclSyntax(
                 #"""
-                lazy var logger: Logger = {
+                private static let logger: Logger = {
                     let bundleID = Bundle(for: _LoggableBundleToken.self).bundleIdentifier ?? ProcessInfo.processInfo.processName
                     return Logger(subsystem: bundleID, category: String(describing: Self.self))
                 }()
