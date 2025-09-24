@@ -1,8 +1,8 @@
 import Loggable
 
-let a = 17
-let b = 25
+@Loggable
+final class TestModule {
+    func log() { logger.debug("Hello, World!") }
+}
 
-let (result, code) = #stringify(a + b)
-
-print("The value \(result) was produced by the code \"\(code)\"")
+TestModule().log()

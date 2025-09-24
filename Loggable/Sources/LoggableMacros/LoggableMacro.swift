@@ -3,31 +3,39 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-/// Implementation of the `stringify` macro, which takes an expression
-/// of any type and produces a tuple containing the value of that expression
-/// and the source code that produced the value. For example
-///
-///     #stringify(x + y)
-///
-///  will expand to
-///
-///     (x + y, "x + y")
-public struct StringifyMacro: ExpressionMacro {
+public struct LoggableMacro: MemberMacro {
+    private static let allowTypes: [SyntaxKind] = [.classDecl, .structDecl, .actorDecl]
+
     public static func expansion(
-        of node: some FreestandingMacroExpansionSyntax,
+        of node: AttributeSyntax,
+        providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
-    ) -> ExprSyntax {
-        guard let argument = node.arguments.first?.expression else {
-            fatalError("compiler bug: the macro does not have any arguments")
+    ) throws -> [DeclSyntax] {
+        guard allowTypes.contains(declaration.kind) else {
+            throw MacroExpansionErrorMessage("@Loggable can only be applied to classes, structs, and actors")
         }
 
-        return "(\(argument), \(literal: argument.description))"
+        return [
+            DeclSyntax(
+                #"""
+                private final class _LoggableBundleToken { }
+                """#
+            ),
+            DeclSyntax(
+                #"""
+                lazy var logger: Logger = {
+                    let bundleID = Bundle(for: _LoggableBundleToken.self).bundleIdentifier ?? ProcessInfo.processInfo.processName
+                    return Logger(subsystem: bundleID, category: String(describing: Self.self))
+                }()
+                """#
+            )
+        ]
     }
 }
 
 @main
 struct LoggablePlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        StringifyMacro.self,
+        LoggableMacro.self,
     ]
 }
