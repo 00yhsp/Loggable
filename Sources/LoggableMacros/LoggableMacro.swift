@@ -25,7 +25,7 @@ public struct LoggableMacro: MemberMacro {
                 #"""
                 private let logger: Logger = {
                     let bundleID = Bundle(for: _LoggableBundleToken.self).bundleIdentifier ?? ProcessInfo.processInfo.processName
-                    return Logger(subsystem: bundleID, category: none)
+                    return Logger(subsystem: bundleID, category: "none")
                 }()
                 """#
             )
