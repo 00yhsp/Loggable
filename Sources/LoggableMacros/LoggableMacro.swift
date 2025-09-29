@@ -15,21 +15,42 @@ public struct LoggableMacro: MemberMacro {
             throw MacroExpansionErrorMessage("@Loggable can only be applied to classes, structs, and actors")
         }
 
-        return [
-            DeclSyntax(
-                #"""
-                private final class _LoggableBundleToken { }
-                """#
-            ),
-            DeclSyntax(
-                #"""
-                private let logger: Logger = {
-                    let bundleID = Bundle(for: _LoggableBundleToken.self).bundleIdentifier ?? ProcessInfo.processInfo.processName
-                    return Logger(subsystem: bundleID, category: "none")
-                }()
-                """#
-            )
-        ]
+        let categoryExpr: ExprSyntax = {
+            if let args = node.arguments?.as(LabeledExprListSyntax.self),
+               let first = args.first?.expression,
+               first.is(StringLiteralExprSyntax.self) {
+                return first
+            } else {
+                return ExprSyntax(stringLiteral: "String(describing: Self.self)")
+            }
+        }()
+
+        let tokenDecl: DeclSyntax =
+        """
+        private final class _LoggableBundleToken { }
+        """
+
+        let _loggerDecl: DeclSyntax =
+        """
+        private static let _logger: Logger = _makeLogger()
+        """
+
+        let _makeLoggerDecl: DeclSyntax =
+        """
+        private static func _makeLogger() -> Logger {
+            let bundleID = Bundle(for: _LoggableBundleToken.self).bundleIdentifier
+                ?? ProcessInfo.processInfo.processName
+            let category = \(categoryExpr)
+            return Logger(subsystem: bundleID, category: category)
+        }
+        """
+
+        let loggerDecl: DeclSyntax =
+        """
+        var logger: Logger { Self._logger }
+        """
+
+        return [tokenDecl, _makeLoggerDecl, _loggerDecl, loggerDecl]
     }
 }
 
