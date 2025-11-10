@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct LoggableMacro: MemberMacro {
-    private static let allowTypes: [SyntaxKind] = [.classDecl, .structDecl, .actorDecl]
+    private static let allowTypes: [SyntaxKind] = [.enumDecl, .classDecl, .structDecl, .actorDecl]
 
     public static func expansion(
         of node: AttributeSyntax,

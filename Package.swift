@@ -30,5 +30,13 @@ let package = Package(
         ),
         .target(name: "Loggable", dependencies: ["LoggableMacros"]),
         .executableTarget(name: "LoggableClient", dependencies: ["Loggable"]),
+        .testTarget(
+            name: "LoggableTests",
+            dependencies: [
+                "Loggable",
+                "LoggableMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )

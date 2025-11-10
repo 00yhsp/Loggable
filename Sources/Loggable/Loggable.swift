@@ -1,7 +1,7 @@
 import Foundation
 @_exported import OSLog
 
-/// A member macro that adds a `Logger` instance to a class, struct, or actor.
+/// A member macro that adds a `Logger` instance to a class, enum, struct, or actor.
 ///
 /// This macro synthesizes a `logger` property that provides a `Logger` instance
 /// from the `OSLog` framework. The logger is automatically configured with the
