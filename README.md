@@ -167,7 +167,7 @@ Add `Loggable` as a dependency to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-username/Loggable.git", from: "1.0.0"),
+    .package(url: "https://github.com/00yhsp/Loggable.git", from: "1.0.0"),
 ],
 targets: [
     .target(
