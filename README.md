@@ -65,7 +65,7 @@ enum DatabaseError: Error {
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-username/Loggable.git", from: "1.0.0"),
+    .package(url: "https://github.com/your-username/Loggable.git", from: "1.1.0"),
 ],
 targets: [
     .target(
@@ -94,9 +94,13 @@ targets: [
 - Xcode 15+
 - iOS 17.0+ / macOS 14.0+ / tvOS 17.0+ / watchOS 10.0+
 
-## 라이선스
+## 문서 생성
 
-이 프로젝트는 MIT 라이선스에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+이 프로젝트는 DocC를 지원합니다. 다음 명령어를 사용하여 문서를 생성할 수 있습니다:
+
+```bash
+swift package generate-documentation --target Loggable
+```
 
 ---
 
@@ -167,7 +171,7 @@ Add `Loggable` as a dependency to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/00yhsp/Loggable.git", from: "1.0.0"),
+    .package(url: "https://github.com/00yhsp/Loggable.git", from: "1.1.0"),
 ],
 targets: [
     .target(
@@ -195,6 +199,14 @@ Then, add `Loggable` to your target's dependencies:
 - Swift 5.9+
 - Xcode 15+
 - iOS 17.0+ / macOS 14.0+ / tvOS 17.0+ / watchOS 10.0+
+
+## Documentation
+
+This project supports DocC. You can generate documentation using the following command:
+
+```bash
+swift package generate-documentation --target Loggable
+```
 
 ## License
 
