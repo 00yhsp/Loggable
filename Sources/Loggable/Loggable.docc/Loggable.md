@@ -9,9 +9,9 @@ By using the `@Loggable` macro, you get a `logger` property that is automaticall
 with your bundle identifier and the type's name as the category.
 
 ### Features
-- 🚀 **Zero Boilerplate**: Just add `@Loggable` and start logging.
-- 🛠️ **Automatic Configuration**: Uses `Bundle.main.bundleIdentifier` and type name.
-- 🎯 **Custom Categories**: Optionally specify a custom category for more precise filtering.
+- 🚀 **Zero Boilerplate**: Eliminates repetitive logger instantiation.
+- 🛠️ **Declarative Configuration**: Automatically manages subsystems and categories, freeing you from manual ID management.
+- 🎯 **Compile-Time Safety**: Eliminates the risk of mistyped strings that aren't caught at compile time.
 
 ## Topics
 
