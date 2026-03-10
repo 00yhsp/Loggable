@@ -48,8 +48,14 @@ public struct LoggableMacro: MemberMacro {
     }
 
     private static func validate(declaration: some DeclGroupSyntax) throws {
+        if declaration.is(ExtensionDeclSyntax.self) {
+            throw MacroExpansionErrorMessage("@Loggable cannot be applied to extensions. Please apply it to the main type declaration to avoid redeclaration issues.")
+        }
+        if declaration.is(ProtocolDeclSyntax.self) {
+            throw MacroExpansionErrorMessage("@Loggable can only be applied to concrete types (classes, structs, enums, and actors), not protocols.")
+        }
         guard allowTypes.contains(declaration.kind) else {
-            throw MacroExpansionErrorMessage("@Loggable can only be applied to classes, structs, and actors")
+            throw MacroExpansionErrorMessage("@Loggable can only be applied to concrete types: classes, structs, enums, and actors.")
         }
     }
 

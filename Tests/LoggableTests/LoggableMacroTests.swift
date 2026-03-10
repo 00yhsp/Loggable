@@ -278,7 +278,25 @@ final class LoggableMacroTests: XCTestCase {
             }
             """,
             diagnostics: [
-                DiagnosticSpec(message: "@Loggable can only be applied to classes, structs, and actors", line: 1, column: 1)
+                DiagnosticSpec(message: "@Loggable can only be applied to concrete types (classes, structs, enums, and actors), not protocols.", line: 1, column: 1)
+            ],
+            macros: testMacros
+        )
+    }
+
+    func test_ErrorOnExtension() {
+        assertMacroExpansion(
+            """
+            @Loggable
+            extension MyClass {
+            }
+            """,
+            expandedSource: """
+            extension MyClass {
+            }
+            """,
+            diagnostics: [
+                DiagnosticSpec(message: "@Loggable cannot be applied to extensions. Please apply it to the main type declaration to avoid redeclaration issues.", line: 1, column: 1)
             ],
             macros: testMacros
         )
