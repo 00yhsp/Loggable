@@ -102,6 +102,11 @@ targets: [
 swift package generate-documentation --target Loggable
 ```
 
+## 영감
+
+이 프로젝트는 다음 아티클에서 영감을 받아 제작되었습니다:
+- [Swift Unified Logging System과 Macro 활용하기](https://minsone.github.io/swift-unified-logging-system-and-macro) by minsone
+
 ---
 
 # Loggable
@@ -207,6 +212,11 @@ This project supports DocC. You can generate documentation using the following c
 ```bash
 swift package generate-documentation --target Loggable
 ```
+
+## Inspiration
+
+This project was inspired by the following resources:
+- [Swift Unified Logging System과 Macro 활용하기](https://minsone.github.io/swift-unified-logging-system-and-macro) by minsone
 
 ## License
 
